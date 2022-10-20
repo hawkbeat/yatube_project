@@ -1,10 +1,28 @@
+# from multiprocessing import context
 from django.shortcuts import render
-from django.http import HttpResponse
-
+from .models import Post
 # Create your views here.
 
-def index(request):    
-    return HttpResponse('Социальная сеть блогеров Yatube')
+
+def index(request):
+    posts = Post.objects.select_related('group')
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'posts/index.html', context)
+
+    # template = 'posts/index.html'
+    # title = 'Это главная страница проекта Yatube'
+    # context = {
+    #     'title': title
+    # }
+    # return render(request, template, context)
+
 
 def group_posts(request):
-    return HttpResponse('Посты по группам')
+    template = 'posts/group_list.html'
+    title = 'Здесь будет информация о группах проекта Yatube'
+    context = {
+        'title': title
+    }
+    return render(request, template, context)
