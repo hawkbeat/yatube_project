@@ -5,7 +5,7 @@ from .models import Post
 
 
 def index(request):
-    posts = Post.objects.select_related('group')
+    posts = Post.objects.order_by('-pub_date')[:10]
     context = {
         'posts': posts,
     }
